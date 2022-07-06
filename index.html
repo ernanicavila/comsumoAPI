@@ -11,14 +11,19 @@
         padding: 0;
       }
       img {
+        cursor: default;
         margin-bottom: 8px;
         width: 250px;
       }
       .tituloFilme {
+        padding: 8px;
         margin-bottom: 8px;
         font-size: 20px;
         flex-direction: column;
         display: flex;
+      }
+      .description p {
+        margin-top: 8px;
       }
     </style>
   </head>
@@ -46,7 +51,7 @@
         />
         ${val.title}
         <div style="display: none" class="description">
-      <p>Descrição:</p>  ${val.overview}
+      <p>Movie description:</p>  ${val.overview}
         </div>
         <hr>
       </div>`;
