@@ -23,6 +23,7 @@
         display: flex;
       }
       .description p {
+        margin: 8px;
         margin-top: 8px;
       }
     </style>
@@ -31,44 +32,45 @@
     <div class="container"></div>
 
     <script>
-      fetch(
-        "https://api.themoviedb.org/3/movie/popular?api_key=506fadb0256c13349acc05dabebf9604&language=en-US&page=1",
-        {
-          method: "GET",
-        }
-      )
-        .then((response) => response.json())
-        .then(function (json) {
-          var container = document.querySelector(".container");
+      const api = async () => {
+        const url =
+          'https://api.themoviedb.org/3/movie/popular?api_key=506fadb0256c13349acc05dabebf9604&language=en-US&page=1';
 
-          json.results.map(function (val) {
-            console.log(val);
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          data.results.map((e) => {
+            const container = document.querySelector('.container');
+
             container.innerHTML += `
-
-      <div style="cursor: pointer" class="tituloFilme">
-        <img class='imagem'
-          src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${val.poster_path}"
-        />
-        ${val.title}
-        <div style="display: none" class="description">
-      <p>Movie description:</p>  ${val.overview}
-        </div>
-        <hr>
-      </div>`;
+<div style="cursor: pointer" class="tituloFilme">
+  <img class='imagem'
+    src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${e.poster_path}"
+  />
+  ${e.title}
+  <div style="display: none" class="description">
+<p>Movie description: <br> ${e.overview}</p>
+  </div>
+  <hr>
+</div>`;
           });
-          let titulos = document.querySelectorAll(".tituloFilme");
+          let titulos = document.querySelectorAll('.tituloFilme');
           for (i = 0; i < titulos.length; i++) {
-            titulos[i].addEventListener("click", (t) => {
+            titulos[i].addEventListener('click', (t) => {
               if (
-                t.target.querySelector(".description").style.display == "none"
+                t.target.querySelector('.description').style.display == 'none'
               ) {
-                t.target.querySelector(".description").style.display = "block";
+                t.target.querySelector('.description').style.display = 'block';
               } else {
-                t.target.querySelector(".description").style.display = "none";
+                t.target.querySelector('.description').style.display = 'none';
               }
             });
           }
-        });
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      api();
     </script>
   </body>
 </html>
